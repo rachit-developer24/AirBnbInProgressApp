@@ -13,6 +13,7 @@ enum selectedoption{
 }
 
 struct NavigationDestinationView: View {
+    @EnvironmentObject var ViewModel:ExploreViewModel
     @State var num:Int = 0
     @State var startdate: Date = Date()
     @State var enddate: Date = Date()
@@ -30,6 +31,10 @@ struct NavigationDestinationView: View {
                         Image(systemName: "magnifyingglass")
                             .fontWeight(.bold)
                         TextField("show destination", text: $text)
+                            .onSubmit {
+                               ViewModel.searchResult(query: text)
+                               show.toggle()
+                           }
                     }
                     .padding()
                     .frame(height: 44)

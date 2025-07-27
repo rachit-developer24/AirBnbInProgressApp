@@ -23,4 +23,11 @@ class ExploreViewModel:ObservableObject {
             print(error)
         }
     }
+    
+    
+    func searchResult(query: String)  {
+      let filterlisting =  listing.filter { $0.city.localizedCaseInsensitiveContains(query) ||
+            $0.state.localizedCaseInsensitiveContains(query) }
+        self.listing = filterlisting.isEmpty ? listing : filterlisting
+    }
 }

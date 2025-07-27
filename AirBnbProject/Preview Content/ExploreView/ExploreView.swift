@@ -14,6 +14,8 @@ struct ExploreView: View {
         NavigationStack {
             if navigationdestination{
                 NavigationDestinationView(show: $navigationdestination)
+                    .environmentObject(ViewModel)
+                    
             }else{ ScrollView {
                 SearchFilterView()
                     .onTapGesture {
@@ -44,4 +46,6 @@ struct ExploreView: View {
 
 #Preview {
     ExploreView()
+        .environmentObject(ExploreViewModel(service: ExploreService()))
+    
 }

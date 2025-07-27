@@ -44,7 +44,7 @@ class ListingDataService {
         longitude: -74.0060,
         address: "567 Broadway",
         images: ["hotel - 4","hotel - 5","hotel - 6"],
-        city: "New York",
+        city: " NewYork",
         state: "New York",
         title: "Modern Manhattan Apartment",
         rating: 4.92,

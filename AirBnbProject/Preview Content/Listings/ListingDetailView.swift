@@ -10,6 +10,12 @@ import SwiftUI
 struct ListingDetailView: View {
     @Environment(\.dismiss) var dismiss
     let listing: Listing
+    @State var camerapostion:MapCameraPosition
+    init(listing:Listing){
+        self.listing = listing
+        let region = MKCoordinateRegion(center: listing.city == "New york" ? .NewYork : .Miami  , span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+        self._camerapostion = State(initialValue: .region(region))
+    }
     var body: some View {
             ScrollView{
                 ZStack(alignment:.topLeading) {
@@ -92,7 +98,7 @@ struct ListingDetailView: View {
                         .font(.headline)
                     ScrollView(.horizontal){
                         HStack(spacing:16){
-                            ForEach(1..<5){bedroom in
+                            ForEach(1...listing.numberOfBedrooms , id:\.self){bedroom in
                                 VStack{
                                     Image(systemName: "bed.double")
                                     Text("bedroom \(bedroom)")
@@ -126,7 +132,7 @@ struct ListingDetailView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Divider()
                 VStack{
-                    Map()
+                    Map(position: $camerapostion)
                         .frame(height: 300)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
@@ -136,7 +142,7 @@ struct ListingDetailView: View {
             .overlay(alignment: .bottom) {
                 HStack{
                     VStack(alignment:.leading){
-                        Text("500$")
+                        Text("$\(listing.pricePerNight)" )
                             .font(.subheadline)
                             .fontWeight(.bold)
                         Text("Total before taxs")
@@ -177,5 +183,5 @@ struct ListingDetailView: View {
 
 
 #Preview {
-    ListingDetailView( listing: ListingDataService().listings[0])
+    ListingDetailView( listing: ListingDataService().listings[1])
 }
